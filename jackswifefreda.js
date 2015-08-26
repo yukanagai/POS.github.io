@@ -1,7 +1,8 @@
 $(function() {
 
+// LISTING MENU ITEMS
 
-var menu = {
+var menuItems = {
 	breakfast: [
 		{name: "Soft Boiled Eggs with Sliders", price: 7},
 		{name: "Grapefruit and Yogurt", price: 8},
@@ -30,7 +31,7 @@ var menu = {
 		{name: "Chicken Kebab", price: 13},
 		{name: "Fish a la Plancha", price: 17},
 		{name: "Mustard Seed Crusted Tofu", price: 13},
-		{name: "Freda's Matzo Ball Soup", price: }
+		{name: "Freda's Matzo Ball Soup", price: 7}
 	],
 
 	sandwiches: [
@@ -60,30 +61,30 @@ var menu = {
 		{name: "Cold Brew", price: 3.5},
 		{name: "Nana Tea", price: 4}
 	]
+}
 
-	alcohol: [
-		{name: "Fleur du Chenin Blanc", price: 8},
-		{name: "Schlumberger Pinot Blanc", price: 9},
-		{name: "Lauren Miquel Rose’", price: 9},
-		{name: "Alta Vista Malbec", price: 8},
-		{name: "Delas Freres Cotes du Rhone", price: 9},
-		{name: "Sparkling Wine: Segura Viudas Brut Reserva Cava", price: 9},
-		{name: "Stella Artois", price: 4},
-		{name: "Goose Island IPA", price: 4},
-		{name: "Boddington in Can", price: 6},
-		{name: "Hoegaarden", price: 4},
-		{name: "Guinness", price: 5},
-		{name: "Bootsy Collins", price: 12},
-		{name: "Pimm's Cup No.1", price: 12},
-		{name: "Cantaloupe Mimosa", price:10},
-		{name: "Bloody Mary", price: 10},
-	]
+// ADDS BUTTONS FOR EACH MENU CATEGORY 
 
+var button = $("<button></button");
+var menuCategories = $('.menuCategories')
+var ulMenu = $('<ul></ul>');
+var liMenu = $('<li></li>');
+
+
+for(category in menuItems) {
+	var newButton = $('<button>').append(category);
+	liMenu.append(newButton);
+	ulMenu.append(liMenu);
+	menuCategories.append(ulMenu);
 };
 
+// WHEN YOU CLICK BREAKFAST....ITEMS + PRICES SHOW
+
+$('.menuCategories button:nth-child(1)').on('click', function() { 
 
 
 
+});
 
 
-})
+});

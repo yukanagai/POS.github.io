@@ -1,0 +1,45 @@
+html {
+	padding: 0px;
+	margin: 50px;
+	font-family: 'Helvetica', 'Arial', 'sans-serif';
+}
+/*
+.wrapper {
+	margin: 20px;
+}*/
+
+.leftColumn {
+	float: left;
+	width: 60%;
+	height: 600px;
+	border: 1px solid black;
+	border-radius: 20px;
+}
+
+.rightColumn {
+	float: right;
+	width: 37%;
+	height: 600px;
+	border: 1px solid black;
+	border-radius: 20px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.menuCategories button h3{
+	padding: 10px;
+	border: 1px solid black;
+	background: white;
+}
+
+.menuCategories ul {
+	list-style: none;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.menuCategories button {
+	margin-left: 10px;
+}
