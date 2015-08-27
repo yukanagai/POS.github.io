@@ -62,8 +62,8 @@ var menuCategories = $('.menuCategories')
 var ulMenu = $('<ul></ul>');
 var liMenu = $('<li></li>');
 
-// For each category in my menu, create a new button
-// and append it to each category.
+// For each category in my menu items (obj array), 
+// create a new button and append it to each category + the DOM.
 
 for(category in menuItems) {
 	var newButton = $('<button>').append(category);
@@ -73,14 +73,11 @@ for(category in menuItems) {
 };
 
 
-// create ul for breakfast items
-// Using the for-in loop, create a new <li> tag
-// Attach each breakfast item to the li
-// attach each li to the ul
+// LIST MENU ITEMS BY CATEGORY BUTTONS ON THE DOM
+
+// Using the for-in loop, create a new <li> for every item
+// Attach each breakfast item to the li + append it to the UL
 // Exit loop and attach the ul to the HTML page
-
-
-// LIST MENU ITEMS BY CATEGORY ON THE DOM
 
 var breakfastButton = $('.menuCategories button:nth-child(1)');
 var breakfastUL = $('<ul></ul>');
@@ -101,19 +98,25 @@ breakfastButton.on('click', function() {
 	});
 });
 
-
 // ADD EACH BREAKFAST ITEM TO RECEIPT ON CLICK....
 
+// Appending a new UL with an ID #receiptUL to the receipt
+// Which is where the new receipt items will get stored
+
 var receipt = $('.receipt');
-receipt.append($('<ul>')).attr('id', 'receiptUL'); 	// added an ID to my new UL element
+receipt.append($('<ul>')).attr('id', 'receiptUL'); 	
 var eachBreakfastItem = $('.menuItems > li');
+
+// Adding an event listener to individual LIs 
+// Creating a new <Receipt LI>  after each new click
+// Adding "$(this)" (which grabs whatever LI item was just clicked on)
+// to the Receipt LI tag and appending it to my receipt UL.
 
 $('.breakfast > li').on('click', function() { 
 	var receiptLI = $('<li></li>');
 	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
 	$('#receiptUL').append(receiptLI);
 }); 
-
 
 
 
@@ -181,7 +184,7 @@ var dessertUL = $('<ul></ul>');
 
 for(var dessertItem in menuItems.dessert) {
 	var dessertLI = $('<li></li>');
-	dessertLI.text(menuItems.entrees[dessertItem].name + ": $" + menuItems.dessert[dessertItem].price)
+	dessertLI.text(menuItems.dessert[dessertItem].name + ": $" + menuItems.dessert[dessertItem].price)
 	dessertUL.append(dessertLI);
 };
 menuCategories.append(dessertUL);
