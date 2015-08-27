@@ -1,5 +1,7 @@
 <b>PROJECT 1: POINT OF SALE WEB-APP</b>
 
+<img src="/jwf-logo.png" />
+
 This is the repo for a basic point of sale web-app, built around NYC's brunch spot Jack's Wife Freda's menu. 
 
 The POS system will be able to:
