@@ -10,8 +10,8 @@ var menuItems = {
 		{name: "Madame Freda", price: 13},
 		{name: "Green Shakshuka", price: 12},
 		{name: "Mediterranean Breakfast", price: 13},
-		{name: "Poached Eggs with Grilled Tomato and Haloumi", price: 12},
-		{name: "jack's breakfast", price: 19},
+		{name: "Poached Eggs with Tomato", price: 12},
+		{name: "Jack's Breakfast", price: 19},
 		{name: "Toasted Baguette", price: 5}
 	],
 
@@ -34,15 +34,6 @@ var menuItems = {
 		{name: "Freda's Matzo Ball Soup", price: 7}
 	],
 
-	sandwiches: [
-		{name: "Jack's Burger", price: 13},
-		{name: "Prego Roll", price: 14},
-		{name: "Chicken Prego", price: 13},
-		{name: "Grilled Eggplant Baguette", price: 10},
-		{name: "Classic Egg Salad Sandwich", price: 9},
-		{name: "Mashed Avocado on Seeded Bread", price: 11}
-	],
-
 	dessert: [
 		{name: "Flourless Chipotle Chocolate Cake", price: 7},
 		{name: "Baked Fruit Crips", price: 7},
@@ -61,15 +52,18 @@ var menuItems = {
 		{name: "Cold Brew", price: 3.5},
 		{name: "Nana Tea", price: 4}
 	]
-}
+};
 
-// ADDS BUTTONS FOR EACH MENU CATEGORY 
+
+// CREATING BUTTONS FOR EACH MENU CATEGORY 
 
 var button = $("<button></button");
 var menuCategories = $('.menuCategories')
 var ulMenu = $('<ul></ul>');
 var liMenu = $('<li></li>');
 
+// For each category in my menu, create a new button
+// and append it to each category.
 
 for(category in menuItems) {
 	var newButton = $('<button>').append(category);
@@ -78,13 +72,147 @@ for(category in menuItems) {
 	menuCategories.append(ulMenu);
 };
 
-// WHEN YOU CLICK BREAKFAST....ITEMS + PRICES SHOW
 
-$('.menuCategories button:nth-child(1)').on('click', function() { 
+// create ul for breakfast items
+// Using the for-in loop, create a new <li> tag
+// Attach each breakfast item to the li
+// attach each li to the ul
+// Exit loop and attach the ul to the HTML page
 
 
+// LIST MENU ITEMS BY CATEGORY ON THE DOM
 
+var breakfastButton = $('.menuCategories button:nth-child(1)');
+var breakfastUL = $('<ul></ul>');
+
+for(var breakfastItem in menuItems.breakfast) {
+	var breakfastLI = $('<li></li>');
+	breakfastLI.text(menuItems.breakfast[breakfastItem].name + ": $" + menuItems.breakfast[breakfastItem].price);
+	breakfastUL.append(breakfastLI);
+};
+	menuCategories.append(breakfastUL);
+
+// HIDING BREAKFAST LIST BY ADDING CLASS
+breakfastUL.addClass('menuItemsHide').addClass('breakfast');
+
+// TOGGLE TO HIDE BREAKFAST LIST ON CLICK
+breakfastButton.on('click', function() {
+	breakfastUL.toggle(function() {
+	});
 });
+
+
+// ADD EACH BREAKFAST ITEM TO RECEIPT ON CLICK....
+
+var receipt = $('.receipt');
+receipt.append($('<ul>')).attr('id', 'receiptUL'); 	// added an ID to my new UL element
+var eachBreakfastItem = $('.menuItems > li');
+
+$('.breakfast > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+
+
+
+
+
+
+var sidesButton = $('.menuCategories button:nth-child(2)');
+var sidesUL = $('<ul></ul>')
+for(var sidesItem in menuItems.sides) {
+	var sidesLI = $('<li></li>');
+	sidesLI.text(menuItems.sides[sidesItem].name + ": $" + menuItems.sides[sidesItem].price)
+	sidesUL.append(sidesLI);
+};
+menuCategories.append(sidesUL);
+
+sidesUL.addClass('menuItemsHide').addClass('sides');
+
+sidesButton.on('click', function() {
+	sidesUL.toggle(function() {
+	});
+});
+
+
+var saladsButton = $('.menuCategories button:nth-child(3)');
+var saladsUL = $('<ul></ul>');
+
+for(var saladsItem in menuItems.salads) {
+	var saladsLI = $('<li></li>');
+	saladsLI.text(menuItems.salads[saladsItem].name + ": $" + menuItems.salads[saladsItem].price)
+	saladsUL.append(saladsLI);
+};
+menuCategories.append(saladsUL);
+
+
+saladsUL.addClass('menuItemsHide').addClass('salads');
+
+
+saladsButton.on('click', function() {
+	saladsUL.toggle(function() {
+	});
+});
+
+var entreesButton = $('.menuCategories button:nth-child(4)');
+var entreesUL = $('<ul></ul>');
+
+for(var entreesItem in menuItems.entrees) {
+	var entreesLI = $('<li></li>');
+	entreesLI.text(menuItems.entrees[entreesItem].name + ": $" + menuItems.entrees[entreesItem].price)
+	entreesUL.append(entreesLI);
+};
+menuCategories.append(entreesUL);
+
+
+entreesUL.addClass('menuItemsHide').addClass('entrees');
+
+entreesButton.on('click', function() {
+	entreesUL.toggle(function() {
+	});
+});
+
+
+var dessertButton = $('.menuCategories button:nth-child(5)');
+var dessertUL = $('<ul></ul>');
+
+for(var dessertItem in menuItems.dessert) {
+	var dessertLI = $('<li></li>');
+	dessertLI.text(menuItems.entrees[dessertItem].name + ": $" + menuItems.dessert[dessertItem].price)
+	dessertUL.append(dessertLI);
+};
+menuCategories.append(dessertUL);
+
+dessertUL.addClass('menuItemsHide').addClass('dessert');
+
+dessertButton.on('click', function() {
+	dessertUL.toggle(function() {
+	});
+});
+
+
+
+var drinksButton = $('.menuCategories button:nth-child(6)');
+var drinksUL = $('<ul></ul>');
+
+for(var drinksItem in menuItems.drinks) {
+	var drinksLI = $('<li></li>');
+	drinksLI.text(menuItems.drinks[drinksItem].name + ": $" + menuItems.drinks[drinksItem].price)
+	drinksUL.append(drinksLI);
+};
+menuCategories.append(drinksUL);
+
+
+drinksUL.addClass('menuItemsHide').addClass('drinks');
+
+drinksButton.on('click', function() {
+	drinksUL.toggle(function() {
+	});
+});
+
 
 
 });

@@ -2,11 +2,9 @@ html {
 	padding: 0px;
 	margin: 50px;
 	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	background: url("http://media.vogue.com/r/c_1,h_396,w_660/2015/02/02/HCH_3000.jpg");
+	background-size: cover;
 }
-/*
-.wrapper {
-	margin: 20px;
-}*/
 
 .leftColumn {
 	float: left;
@@ -14,6 +12,7 @@ html {
 	height: 600px;
 	border: 1px solid black;
 	border-radius: 20px;
+	background: #FFFEF8;
 }
 
 .rightColumn {
@@ -22,24 +21,43 @@ html {
 	height: 600px;
 	border: 1px solid black;
 	border-radius: 20px;
+	background: #FFFEF8;
 }
 
 h1 {
 	text-align: center;
 }
 
-.menuCategories button h3{
+.menuCategories button {
 	padding: 10px;
 	border: 1px solid black;
+	border-radius: 10px;
 	background: white;
+	width: 100px;
+	/*display: block;*/
+}
+
+.menuCategories button:hover {
+	background: black;
+	color: white;
 }
 
 .menuCategories ul {
 	list-style: none;
-	text-align: center;
 	margin: 0 auto;
+	margin-top: 30px;
 }
 
-.menuCategories button {
+/*.menuCategories button {
 	margin-left: 10px;
+}*/
+
+.menuItemsHide {
+	display: none;
+	text-align: left;
+}
+
+.receipt li {
+	list-style-type: none;
+	margin-left: 30px;
 }
