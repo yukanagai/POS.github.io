@@ -22,11 +22,6 @@ var menuItems = {
 		{name: "Arugula Salad", price: 6}
 	],
 
-	salads:[
-		{name: "Greek Salad", price: 12},
-		{name: "Tuna Salad", price: 14}
-	],
-
 	entrees: [
 		{name: "Chicken Kebab", price: 13},
 		{name: "Fish a la Plancha", price: 17},
@@ -56,7 +51,7 @@ var menuItems = {
 
 
 
-// CREATING MENU BUTTONS FOR ALL FOOD CATEGORIES
+// BUTTONS FOR FOOD CATEGORIES
 
 var button = $("<button></button");
 var menuCategories = $('.menuCategories')
@@ -96,7 +91,7 @@ for(var breakfastItem in menuItems.breakfast) {
 	menuCategories.append(breakfastUL);
 
 
-// CREATE A DEFAULT STATE TO HIDE THE CATEGORY LIST
+// HIDE MENU ITEM LIST BY DEFAULT
 
 breakfastUL.addClass('menuItemsHide').addClass('breakfast');
 
@@ -109,9 +104,9 @@ breakfastButton.on('click', function() {
 	});
 });
 
-// ADD EACH BREAKFAST ITEM TO RECEIPT WHEN CLICKED ....
+// ADD EACH BREAKFAST ITEM TO RECEIPT ON CLICK ....
 
-var receipt = $('.receipt');
+var receipt = $('.rightColumn .receipt');
 var receiptUL = $('<ul>').attr('id', 'receiptUL'); 
 receipt.append(receiptUL); 	
 
@@ -120,13 +115,15 @@ receipt.append(receiptUL);
 
 $('.breakfast > li').on('click', function() { 
 	$(this).clone().appendTo($('#receiptUL'));
-	calculate();	// fires the cal function everytime item gets added to the receipt
+// fires the cal function everytime item gets added to the receipt
+	calculate();
 });
+
 
 
 // THE CALCULATOR
 
-function calculate() {
+var calculate = function() {
 
 // Grabbing the price from receipt UL - NEED SPACE in between!
 // Or else it will concatenate it into one squished string.
@@ -134,21 +131,97 @@ function calculate() {
 
 // Creating a new array	
 	var calPrice = [];
-	// console.log("array length: ", pricesArray.length); 
 
-	// Looping through the array.. use eq(i) for jQuery
+// Looping through the array.. use eq(i) for jQuery
 	for(var i=0; i<pricesArray.length; i++) {
-		var prices = parseInt(pricesArray.eq(i).text());
-	calPrice.push(prices);
-		
-	var sum = calPrice.reduce(function(previous, current) { 
-	return previous + current; }, 0);
+		var prices = parseFloat(pricesArray[i].textContent);
+		calPrice.push(prices);
+	};
+	
+// Adding the sum of the entire array to get Total	
+// var totalBeforeTax = calPrice.reduce(function(previous, current) {
+// return previous + current; }, 0);
+	var sumBeforeTotal = 0
+	for (var i = 0;i<calPrice.length;i++){
+		sumBeforeTotal += calPrice[i];
+	};
+
+// TOTAL BEFORE TAX
+	$('#totalBeforeTax').val("$ " + sumBeforeTotal);
+
+// NYC SALES TAX (8%)
+	var salesTax = sumBeforeTotal * 0.08875;
+	var shorthandTax = salesTax.toFixed(2);
+	$('#salesTax').val("$ " + shorthandTax);
+
+// TOTAL WITH TAX
+	var totalWithTax = totalBeforeTax + shorthandTax;
+
+// FINAL TOTAL WITH TIP OPTIONS
+	$('#tip12').on('click', function(event) {
+		event.preventDefault();
+		var tipTotal = (sumBeforeTotal* 0.12);
+		var finalTotal = sumBeforeTotal + tipTotal + salesTax;
+		var stringTotal = finalTotal.toFixed(2);
+		$('#finalTotal').val("$ " + stringTotal);
+	});
+
+	$('#tip15').on('click', function(event) {
+		event.preventDefault();
+		var tipTotal = (sumBeforeTotal* 0.15);
+		var finalTotal = sumBeforeTotal + tipTotal + salesTax;
+		var stringTotal = finalTotal.toFixed(2);
+		$('#finalTotal').val("$ " + stringTotal);
+	});
+
+	$('#tip20').on('click', function(event) {
+		event.preventDefault();
+		var tipTotal = (sumBeforeTotal* 0.20);
+		var finalTotal = sumBeforeTotal + tipTotal + salesTax;
+		var stringTotal = finalTotal.toFixed(2);
+		$('#finalTotal').val("$ " + stringTotal);
+	});
+
+// CLEARING THE ORDER
+	// $('#clear').live('click', function(event) {
+	// 	event.preventDefault();
+	// 	$(this).parent().remove();
+	// 	// $('#finalTotal').val("");
+	// 	// $('.receipt').val("");
+	// });
 
 };
-console.log(calPrice);
-console.log(sum);
 
-};
+
+/// TRACKING MULTIPLE ORDERS ....
+
+var saveOrder = $('#saveOrder');	//Save order prompt+button
+var multipleOrders = $('.multipleOrders'); 	// HTML BODY
+var orderListUL = $('<ul></ul>');
+
+var ordersArray = [];		// empty array
+
+saveOrder.on('click', function(event) {
+	event.preventDefault();
+	var customerOrderButton = $('<button></button>');
+	var customerName = $("#customerName").html();
+	customerOrderButton.append(customerName);	// customer's name
+	var orderListLI = $('<li></li>');	// creates a new LI for the button
+	orderListLI.append(customerOrderButton); // Appends button to the LI + UL
+	orderListUL.append(orderListLI);
+	multipleOrders.append(orderListUL);
+});
+
+console.log(customerName);
+	// Create new OBJECT for each new customer's name
+// 	var ordersObj = {name: customerName, menuItems: [], price: []};	
+
+// 	ordersArray.push(ordersObj);
+// 	console.log(ordersArray);
+// });
+
+
+
 
 
 
@@ -158,13 +231,19 @@ console.log(sum);
 // SIDES
 
 var sidesButton = $('.menuCategories button:nth-child(2)');
-var sidesUL = $('<ul></ul>')
+var sidesUL = $('<ul></ul>');
+
 for(var sidesItem in menuItems.sides) {
 	var sidesLI = $('<li></li>');
-	sidesLI.text(menuItems.sides[sidesItem].name + ": $" + menuItems.sides[sidesItem].price)
+	var sidesName = $('<span class="name"></span>');
+	var sidesPrice = $('<span class="price"></span>');
+
+	sidesName.text(menuItems.sides[sidesItem].name);
+	sidesPrice.text(menuItems.sides[sidesItem].price);
+	sidesLI.append(sidesName).append(sidesPrice);
 	sidesUL.append(sidesLI);
 };
-menuCategories.append(sidesUL);
+	menuCategories.append(sidesUL);
 
 sidesUL.addClass('menuItemsHide').addClass('sides');
 
@@ -177,48 +256,26 @@ sidesButton.on('click', function() {
 
 $('.sides > li').on('click', function() { 
 	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
+	$(this).clone().appendTo($('#receiptUL'));
+
+	calculate();
 }); 
 
-
-
-// SALDADS 
-
-var saladsButton = $('.menuCategories button:nth-child(3)');
-var saladsUL = $('<ul></ul>');
-
-for(var saladsItem in menuItems.salads) {
-	var saladsLI = $('<li></li>');
-	saladsLI.text(menuItems.salads[saladsItem].name + ": $" + menuItems.salads[saladsItem].price)
-	saladsUL.append(saladsLI);
-};
-menuCategories.append(saladsUL);
-
-saladsUL.addClass('menuItemsHide').addClass('salads');
-
-saladsButton.on('click', function() {
-	saladsUL.toggle(function() {
-	});
-});
-
-// ADDING SALADS TO RECEIPT
-
-$('.salads > li').on('click', function() { 
-	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
-}); 
 
 
 // ENTREES
 
-var entreesButton = $('.menuCategories button:nth-child(4)');
+var entreesButton = $('.menuCategories button:nth-child(3)');
 var entreesUL = $('<ul></ul>');
 
 for(var entreesItem in menuItems.entrees) {
 	var entreesLI = $('<li></li>');
-	entreesLI.text(menuItems.entrees[entreesItem].name + ": $" + menuItems.entrees[entreesItem].price)
+	var entreesName = $('<span class="name"></span>');
+	var entreesPrice = $('<span class="price"></span>');
+
+	entreesName.text(menuItems.entrees[entreesItem].name);
+	entreesPrice.text(menuItems.entrees[entreesItem].price);
+	entreesLI.append(entreesName).append(entreesPrice);
 	entreesUL.append(entreesLI);
 };
 menuCategories.append(entreesUL);
@@ -233,23 +290,28 @@ entreesButton.on('click', function() {
 // ADDING ENTREES TO RECEIPT
 
 $('.entrees > li').on('click', function() { 
-	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
+	$(this).clone().appendTo($('#receiptUL'));
+
+	calculate();
 }); 
 
 
 // DESSERT
 
-var dessertButton = $('.menuCategories button:nth-child(5)');
+var dessertButton = $('.menuCategories button:nth-child(4)');
 var dessertUL = $('<ul></ul>');
 
 for(var dessertItem in menuItems.dessert) {
 	var dessertLI = $('<li></li>');
-	dessertLI.text(menuItems.dessert[dessertItem].name + ": $" + menuItems.dessert[dessertItem].price)
+	var dessertName = $('<span class="name"></span>');
+	var dessertPrice = $('<span class="price"></span>');
+
+	dessertName.text(menuItems.dessert[dessertItem].name);
+	dessertPrice.text(menuItems.dessert[dessertItem].price);
+	dessertLI.append(dessertName).append(dessertPrice);
 	dessertUL.append(dessertLI);
 };
-menuCategories.append(dessertUL);
+	menuCategories.append(dessertUL);
 
 dessertUL.addClass('menuItemsHide').addClass('dessert');
 
@@ -261,22 +323,28 @@ dessertButton.on('click', function() {
 // ADDING DESSERTS TO RECEIPT
 
 $('.dessert > li').on('click', function() { 
-	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
+	$(this).clone().appendTo($('#receiptUL'));
+	
+	calculate();
 }); 
 
 
 // DRINKS
 
-var drinksButton = $('.menuCategories button:nth-child(6)');
+var drinksButton = $('.menuCategories button:nth-child(5)');
 var drinksUL = $('<ul></ul>');
 
 for(var drinksItem in menuItems.drinks) {
 	var drinksLI = $('<li></li>');
-	drinksLI.text(menuItems.drinks[drinksItem].name + ": $" + menuItems.drinks[drinksItem].price)
+	var drinksName = $('<span class="name"></span>');
+	var drinksPrice = $('<span class="price"></span>');
+
+	drinksName.text(menuItems.drinks[drinksItem].name);
+	drinksPrice.text(menuItems.drinks[drinksItem].price);
+	drinksLI.append(drinksName).append(drinksPrice);
 	drinksUL.append(drinksLI);
 };
+
 menuCategories.append(drinksUL);
 
 drinksUL.addClass('menuItemsHide').addClass('drinks');
@@ -289,13 +357,10 @@ drinksButton.on('click', function() {
 // ADDING DRINKS TO RECEIPT
 
 $('.drinks > li').on('click', function() { 
-	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
+	$(this).clone().appendTo($('#receiptUL'));
+	
+	calculate();
 }); 
-
-
-
 
 
 

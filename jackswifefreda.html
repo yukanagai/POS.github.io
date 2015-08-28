@@ -1,35 +1,56 @@
 <html>
 <head>
-e	<link rel="stylesheet" href="/jackswifefreda.css" charset="utf-8">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="jackswifefreda.js"></script>
-   
+	<link rel="stylesheet" href="/jackswifefreda.css">
+   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   <script type="text/javascript" src="jackswifefreda.js"></script>
+
 </head>
 
 <body>
-
-	<div class="wrapper">
-
-		<div class="leftColumn">
-
-			<div class="menuCategories">
-				<h1>MENU</h1>
-			</div>
-				
-			<div class="multipleOrders">
-			</div>
+	<div class="bottomColumn">
+		<div class="multipleOrders">
+			<h3>ORDERS</h3>
+		</div>
 		</div>
 
+	<div class="leftColumn">
+		<div class="menuCategories">
+			<h1>MENU</h1>
+		</div>
+	</div>
 
-		<div class="rightColumn">
-			<h1>RECEIPT</h1>
+
+	<div class="rightColumn">
+		<h1>RECEIPT</h1>
+			<form>
+				Customer Name: <input id="customerName">
+			</form>
 
 			<div class="receipt">
 			</div>
-		</div>
 
-
+			<form id="calculations">
+				<p>Subotal (pre-tax):
+					<input id="totalBeforeTax"></p>
+				<p>Tax:
+					<input id="salesTax"></p>	
+				<p>Tip:
+					<button id="tip12">12%</button>
+					<button id="tip15">15%</button>
+					<button id="tip20">20%</button></p>
+				
+				<p id="orderTotalText"><strong>Final total:
+					<input id="finalTotal"></strong></p>
+					<br>
+					<br>
+				<button id="saveOrder">SAVE ORDER</button>
+				<br>
+				<br>
+				<input type="reset" value="Clear Order">
+				<!-- <button id="clear">CLEAR ORDER</button> -->
+			</form>
 	</div>
+	
 
 </body>
 

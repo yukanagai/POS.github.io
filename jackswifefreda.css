@@ -1,6 +1,6 @@
 html {
 	padding: 0px;
-	margin: 50px;
+	margin: 30px;
 	font-family: 'Helvetica', 'Arial', 'sans-serif';
 	background: url("http://media.vogue.com/r/c_1,h_396,w_660/2015/02/02/HCH_3000.jpg");
 	background-size: cover;
@@ -24,17 +24,24 @@ html {
 	background: #FFFEF8;
 }
 
-h1 {
+.bottomColumn {
+	border: 1px solid black;
+	border-radius: 20px;
+	background: #FFFEF8;
+	margin-bottom: 10px;
+	height: 130px;
+}
+
+h1, h3 {
 	text-align: center;
 }
 
 .menuCategories button {
-	padding: 10px;
+	padding: 5px 10px;
 	border: 1px solid black;
 	border-radius: 10px;
 	background: white;
-	width: 100px;
-	/*display: block;*/
+	margin: 0 10px;
 }
 
 .menuCategories button:hover {
@@ -46,11 +53,16 @@ h1 {
 	list-style: none;
 	margin: 0 auto;
 	margin-top: 30px;
+	margin: 10px;
 }
 
-/*.menuCategories button {
-	margin-left: 10px;
-}*/
+.menuCategories li {
+	margin: 3px;
+}
+
+.receipt li {
+	margin: 3px;
+}
 
 .menuItemsHide {
 	display: none;
@@ -59,4 +71,49 @@ h1 {
 
 .receipt li {
 	list-style-type: none;
+}
+
+form {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 12px;
+}
+
+#totalBeforeTax, #salesTax, #finalTotal {
+	text-align: center;
+}
+
+p #orderTotalText {
+	color: blue;
+	font-size: 15px;
+}
+
+#newOrder {
+	display: block;
+	margin: 0 auto;
+}
+
+.multipleOrders ul {
+	list-style-type: none;
+}
+
+.multipleOrders li {
+	display: inline-block;
+	margin: 0 10px;
+
+}
+
+.multipleOrders li button {
+	padding: 5px 10px;
+	border: 1px solid black;
+	border-radius: 10px;
+	background: white;
+	margin: 0 2px;
+}
+
+#calculations {
+	position: absolute;
+	bottom: 0;
+	margin: 0 auto;
+	text-align: center;
 }
