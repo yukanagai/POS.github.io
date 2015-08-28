@@ -141,9 +141,8 @@ function calculate() {
 		var prices = parseInt(pricesArray.eq(i).text());
 	calPrice.push(prices);
 		
-	var sum = calPrice.reduce(function(pv, cv) { 
-	return pv + cv; }, 0);
-
+	var sum = calPrice.reduce(function(previous, current) { 
+	return previous + current; }, 0);
 
 };
 console.log(calPrice);
