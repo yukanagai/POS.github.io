@@ -1,6 +1,6 @@
 $(function() {
 
-// LISTING MENU ITEMS
+// MENU ITEMS
 
 var menuItems = {
 	breakfast: [
@@ -55,15 +55,16 @@ var menuItems = {
 };
 
 
-// CREATING BUTTONS FOR EACH MENU CATEGORY 
+
+// CREATING MENU BUTTONS FOR ALL FOOD CATEGORIES
 
 var button = $("<button></button");
 var menuCategories = $('.menuCategories')
 var ulMenu = $('<ul></ul>');
 var liMenu = $('<li></li>');
 
-// For each category in my menu items (obj array), 
-// create a new button and append it to each category + the DOM.
+// Using a for-in loop, create a new button for each 
+// food category in my menu and append to the menu's li>ul>body 
 
 for(category in menuItems) {
 	var newButton = $('<button>').append(category);
@@ -73,56 +74,89 @@ for(category in menuItems) {
 };
 
 
-// LIST MENU ITEMS BY CATEGORY BUTTONS ON THE DOM
+// CREATE LISTS FOR EVERY MENU CATEGORY 
 
-// Using the for-in loop, create a new <li> for every item
-// Attach each breakfast item to the li + append it to the UL
-// Exit loop and attach the ul to the HTML page
+// Using the for-in loop, create a new <li> for every menu item 
+// grouped by it's food category. 
+// Attach each item to the category's li > ul > body.
 
 var breakfastButton = $('.menuCategories button:nth-child(1)');
-var breakfastUL = $('<ul></ul>');
+var breakfastUL = $('<ul>');
 
-for(var breakfastItem in menuItems.breakfast) {
-	var breakfastLI = $('<li></li>');
-	breakfastLI.text(menuItems.breakfast[breakfastItem].name + ": $" + menuItems.breakfast[breakfastItem].price);
+for(var breakfastItem in menuItems.breakfast) {	
+	var breakfastLI = $('<li>');
+	var breakfastName = $('<span class="name">');
+	var breakfastPrice = $('<span class="price">');
+
+	breakfastName.text(menuItems.breakfast[breakfastItem].name);
+	breakfastPrice.text(menuItems.breakfast[breakfastItem].price);
+	breakfastLI.append(breakfastName).append(breakfastPrice);
 	breakfastUL.append(breakfastLI);
 };
 	menuCategories.append(breakfastUL);
 
-// HIDING BREAKFAST LIST BY ADDING CLASS
+
+// CREATE A DEFAULT STATE TO HIDE THE CATEGORY LIST
+
 breakfastUL.addClass('menuItemsHide').addClass('breakfast');
 
-// TOGGLE TO HIDE BREAKFAST LIST ON CLICK
+// Add an event listener to toggle the hidden class
+// So the food category becomes visible when the corresponding
+// button gets clicked on, and hides when clicked on again. 
+
 breakfastButton.on('click', function() {
 	breakfastUL.toggle(function() {
 	});
 });
 
-// ADD EACH BREAKFAST ITEM TO RECEIPT ON CLICK....
-
-// Appending a new UL with an ID #receiptUL to the receipt
-// Which is where the new receipt items will get stored
+// ADD EACH BREAKFAST ITEM TO RECEIPT WHEN CLICKED ....
 
 var receipt = $('.receipt');
-receipt.append($('<ul>')).attr('id', 'receiptUL'); 	
-var eachBreakfastItem = $('.menuItems > li');
+var receiptUL = $('<ul>').attr('id', 'receiptUL'); 
+receipt.append(receiptUL); 	
 
-// Adding an event listener to individual LIs 
-// Creating a new <Receipt LI>  after each new click
-// Adding "$(this)" (which grabs whatever LI item was just clicked on)
-// to the Receipt LI tag and appending it to my receipt UL.
+// when the breakfast item gets clicked... 
+// append the whole thing ($(this)) to the receipt UL
 
 $('.breakfast > li').on('click', function() { 
-	var receiptLI = $('<li></li>');
-	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
-	$('#receiptUL').append(receiptLI);
-}); 
+	$(this).clone().appendTo($('#receiptUL'));
+	calculate();	// fires the cal function everytime item gets added to the receipt
+});
+
+
+// THE CALCULATOR
+
+function calculate() {
+
+// Grabbing the price from receipt UL - NEED SPACE in between!
+// Or else it will concatenate it into one squished string.
+	var pricesArray = $("#receiptUL .price"); 
+
+// Creating a new array	
+	var calPrice = [];
+	// console.log("array length: ", pricesArray.length); 
+
+	// Looping through the array.. use eq(i) for jQuery
+	for(var i=0; i<pricesArray.length; i++) {
+		var prices = parseInt(pricesArray.eq(i).text());
+	calPrice.push(prices);
+		
+	var sum = calPrice.reduce(function(pv, cv) { 
+	return pv + cv; }, 0);
+
+
+};
+console.log(calPrice);
+console.log(sum);
+
+};
 
 
 
 
 
 
+// SIDES
 
 var sidesButton = $('.menuCategories button:nth-child(2)');
 var sidesUL = $('<ul></ul>')
@@ -140,6 +174,17 @@ sidesButton.on('click', function() {
 	});
 });
 
+// ADDING SIDES TO RECEIPT
+
+$('.sides > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+
+// SALDADS 
 
 var saladsButton = $('.menuCategories button:nth-child(3)');
 var saladsUL = $('<ul></ul>');
@@ -151,14 +196,23 @@ for(var saladsItem in menuItems.salads) {
 };
 menuCategories.append(saladsUL);
 
-
 saladsUL.addClass('menuItemsHide').addClass('salads');
-
 
 saladsButton.on('click', function() {
 	saladsUL.toggle(function() {
 	});
 });
+
+// ADDING SALADS TO RECEIPT
+
+$('.salads > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+// ENTREES
 
 var entreesButton = $('.menuCategories button:nth-child(4)');
 var entreesUL = $('<ul></ul>');
@@ -170,7 +224,6 @@ for(var entreesItem in menuItems.entrees) {
 };
 menuCategories.append(entreesUL);
 
-
 entreesUL.addClass('menuItemsHide').addClass('entrees');
 
 entreesButton.on('click', function() {
@@ -178,6 +231,16 @@ entreesButton.on('click', function() {
 	});
 });
 
+// ADDING ENTREES TO RECEIPT
+
+$('.entrees > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+// DESSERT
 
 var dessertButton = $('.menuCategories button:nth-child(5)');
 var dessertUL = $('<ul></ul>');
@@ -196,7 +259,16 @@ dessertButton.on('click', function() {
 	});
 });
 
+// ADDING DESSERTS TO RECEIPT
 
+$('.dessert > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+// DRINKS
 
 var drinksButton = $('.menuCategories button:nth-child(6)');
 var drinksUL = $('<ul></ul>');
@@ -208,13 +280,23 @@ for(var drinksItem in menuItems.drinks) {
 };
 menuCategories.append(drinksUL);
 
-
 drinksUL.addClass('menuItemsHide').addClass('drinks');
 
 drinksButton.on('click', function() {
 	drinksUL.toggle(function() {
 	});
 });
+
+// ADDING DRINKS TO RECEIPT
+
+$('.drinks > li').on('click', function() { 
+	var receiptLI = $('<li></li>');
+	receiptLI.text($(this).html()); // using this returns itself...this grabs the element so that you can use it to do something to it
+	$('#receiptUL').append(receiptLI);
+}); 
+
+
+
 
 
 
