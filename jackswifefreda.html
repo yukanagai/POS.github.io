@@ -1,8 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="/jackswifefreda.css">
-   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-   <script type="text/javascript" src="jackswifefreda.js"></script>
+  
 
 </head>
 
@@ -22,35 +21,50 @@
 
 	<div class="rightColumn">
 		<h1>RECEIPT</h1>
-			<form>
-				Customer Name: <input id="customerName">
-			</form>
 
 			<div class="receipt">
 			</div>
 
 			<form id="calculations">
+				<p>Customer Name: 
+					<input id="customerName">
+				</p>
 				<p>Subotal (pre-tax):
-					<input id="totalBeforeTax"></p>
+					<input id="totalBeforeTax">
+				</p>
 				<p>Tax:
-					<input id="salesTax"></p>	
+					<input id="salesTax">
+				</p>	
 				<p>Tip:
 					<button id="tip12">12%</button>
 					<button id="tip15">15%</button>
-					<button id="tip20">20%</button></p>
+					<button id="tip20">20%</button>
+				</p>
 				
 				<p id="orderTotalText"><strong>Final total:
-					<input id="finalTotal"></strong></p>
-					<br>
+					<input id="finalTotal"></strong>
+				</p>
+					
+				<p>Cash provided:
+					<input id="cashProvided">
+					<button id="calChange">CALCULATE</button>
+				</p>
+
+				<p>Change:
+					<input id="cashChange">
+				</p>
+
+
 					<br>
 				<button id="saveOrder">SAVE ORDER</button>
 				<br>
 				<br>
-				<input type="reset" value="Clear Order">
-				<!-- <button id="clear">CLEAR ORDER</button> -->
+				<input type ="button" name="Clear" id="clearButton" value = "Clear Order" onclick="this.form.reset()"/>
 			</form>
 	</div>
-	
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   <script type="text/javascript" src="jackswifefreda.js"></script>
 
 </body>
 

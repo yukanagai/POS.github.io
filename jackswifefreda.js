@@ -50,7 +50,6 @@ var menuItems = {
 };
 
 
-
 // BUTTONS FOR FOOD CATEGORIES
 
 var button = $("<button></button");
@@ -67,6 +66,14 @@ for(category in menuItems) {
 	ulMenu.append(liMenu);
 	menuCategories.append(ulMenu);
 };
+
+
+// DISPLAY ONLY ACTIVE MENU CATEGORY WHEN CLICKED ON
+
+$('.menuCategories ul li button').click(function() {
+    $('.menuItemsHide').hide();
+});
+
 
 
 // CREATE LISTS FOR EVERY MENU CATEGORY 
@@ -104,6 +111,9 @@ breakfastButton.on('click', function() {
 	});
 });
 
+
+
+
 // ADD EACH BREAKFAST ITEM TO RECEIPT ON CLICK ....
 
 var receipt = $('.rightColumn .receipt');
@@ -115,49 +125,170 @@ receipt.append(receiptUL);
 
 $('.breakfast > li').on('click', function() { 
 	$(this).clone().appendTo($('#receiptUL'));
+
+
 // fires the cal function everytime item gets added to the receipt
 	calculate();
 });
+ 
 
+// ==========================================================
+
+/// TRACKING MULTIPLE ORDERS
+
+var saveOrder = $('#saveOrder');	// "Save Order" button
+var multipleOrders = $('.multipleOrders'); 	// HTML div
+var orderListUL = $('<ul></ul>');
+
+var ordersArray = [];				// empty array
+
+
+// Storing each order into customer name buttons as an object:
+
+saveOrder.on('click', function() { 
+	event.preventDefault();
+
+// create customer name button
+	var customerNameButton = $('<button></button>'); 
+// grab customer's name	+ append to the button
+	var customerName = $('#customerName').val();	
+	customerNameButton.append(customerName);
+// create a new LI		
+	var orderListLI = $('<li></li>');		
+// add the Button to the LI > UL > div
+	orderListLI.append(customerNameButton); 	
+	orderListUL.append(orderListLI);
+	multipleOrders.append(orderListUL); 			
+	
+// create new object that includes customer name
+	var newObject = {name: customerName, items: [], price:[]};
+
+// push receipt items (names) into new Object
+	var receiptNames = $('#receiptUL li span .name');
+
+// push receipt items (price) into new Object
+	$('#receiptUL li span.price').each(function () {
+		var receiptPriceList = $(this).text();
+		newObject.price.push(receiptPriceList);
+	})
+
+// push receipt items (names) into new Object
+	$('#receiptUL li span.name').each(function () {
+		var receiptItemList = $(this).text();
+		newObject.items.push(receiptItemList);
+	})
+
+// push entire new object into the LAST empty array
+	ordersArray.push(newObject);
+
+// When a new order gets saved, clear the receipt section
+	clearReceipt();
+
+
+});
+
+// ==========================================================
+
+
+// Clear  currently open receipt list 
+// when "clear" or "save" order buttons are clicked
+
+var clearReceipt = function() {
+	$('#receiptUL > li > span').parent().remove();
+	$("#calculations")[0].reset();
+	
+	saveOrder.on('click', function() {
+		$('#menuCategories > li').toggle(function() {
+		});
+	});
+
+	$('#clearButton').on('click', function() {
+		$('#menuCategories > li').toggle(function() {
+		});
+
+	});
+
+};
+
+
+// ==========================================================
+
+
+
+// NOT WORKING... ALERT IF CUSTOMER NAME IS EMPTY!!
+
+// saveOrder.on('click', function() { 
+// 	event.preventDefault();
+	// if ($('#customerName').val() == '') {
+	// 	alert("Please fill out the customer's name.");
+	// 	return false;
+	// } else { 
+
+// });
+
+
+
+//==========================================================
+
+
+// DELETING ITEMS OFF THE RECEIPT
+
+// the calculate function is within this function so that it 
+// recalculates the total every time items get deleted
+
+var deletingItems = function() { 
+	$(document).on('click', "#receiptUL > li", function() { 
+	$(this).remove();
+	
+	calculate();
+}); 
+
+};
+
+
+
+
+//==========================================================
 
 
 // THE CALCULATOR
 
 var calculate = function() {
 
-// Grabbing the price from receipt UL - NEED SPACE in between!
-// Or else it will concatenate it into one squished string.
+	deletingItems();
+
+
+	// Grabbing the price from receipt UL - NEED SPACE in between!
+	// Or else it will concatenate it into one squished string.
 	var pricesArray = $("#receiptUL .price"); 
 
-// Creating a new array	
+	// Creating a new array	
 	var calPrice = [];
 
-// Looping through the array.. use eq(i) for jQuery
+	// Looping through the array.. use eq(i) for jQuery
 	for(var i=0; i<pricesArray.length; i++) {
 		var prices = parseFloat(pricesArray[i].textContent);
 		calPrice.push(prices);
 	};
 	
-// Adding the sum of the entire array to get Total	
-// var totalBeforeTax = calPrice.reduce(function(previous, current) {
-// return previous + current; }, 0);
+	// Adding the sum of the entire array to get Total	
 	var sumBeforeTotal = 0
 	for (var i = 0;i<calPrice.length;i++){
 		sumBeforeTotal += calPrice[i];
 	};
 
-// TOTAL BEFORE TAX
+	// TOTAL BEFORE TAX
 	$('#totalBeforeTax').val("$ " + sumBeforeTotal);
 
-// NYC SALES TAX (8%)
+	// NYC SALES TAX (8%)
 	var salesTax = sumBeforeTotal * 0.08875;
 	var shorthandTax = salesTax.toFixed(2);
 	$('#salesTax').val("$ " + shorthandTax);
 
-// TOTAL WITH TAX
+	// TOTAL WITH TAX
 	var totalWithTax = totalBeforeTax + shorthandTax;
 
-// FINAL TOTAL WITH TIP OPTIONS
+	// FINAL TOTAL WITH TIP OPTIONS
 	$('#tip12').on('click', function(event) {
 		event.preventDefault();
 		var tipTotal = (sumBeforeTotal* 0.12);
@@ -182,51 +313,34 @@ var calculate = function() {
 		$('#finalTotal').val("$ " + stringTotal);
 	});
 
-// CLEARING THE ORDER
-	// $('#clear').live('click', function(event) {
-	// 	event.preventDefault();
-	// 	$(this).parent().remove();
-	// 	// $('#finalTotal').val("");
-	// 	// $('.receipt').val("");
-	// });
+// CALCULATE CHANGE FOR CASH PURCHASES
+
+// RETURNS NaN !!!!!
+
+$('#calChange').on('click', function(event) {
+	event.preventDefault();
+	var cashProvided = $('#cashProvided').val();
+	var cashChange = cashProvided - finalTotal;
+	$('#cashChange').val("$ " + cashChange);
+
+})
+
+
+
+
+// CLEARING THE RECEIPT ORDER
+// FORM ORDER AUTOMATICALLY GETS RESET VIA HTML CODING
+	$('#clearButton').on('click', function() {
+		$('#receiptUL > li > span').parent().remove();
+
+	});
+
 
 };
 
 
-/// TRACKING MULTIPLE ORDERS ....
 
-var saveOrder = $('#saveOrder');	//Save order prompt+button
-var multipleOrders = $('.multipleOrders'); 	// HTML BODY
-var orderListUL = $('<ul></ul>');
-
-var ordersArray = [];		// empty array
-
-saveOrder.on('click', function(event) {
-	event.preventDefault();
-	var customerOrderButton = $('<button></button>');
-	var customerName = $("#customerName").html();
-	customerOrderButton.append(customerName);	// customer's name
-	var orderListLI = $('<li></li>');	// creates a new LI for the button
-	orderListLI.append(customerOrderButton); // Appends button to the LI + UL
-	orderListUL.append(orderListLI);
-	multipleOrders.append(orderListUL);
-});
-
-console.log(customerName);
-	// Create new OBJECT for each new customer's name
-// 	var ordersObj = {name: customerName, menuItems: [], price: []};	
-
-// 	ordersArray.push(ordersObj);
-// 	console.log(ordersArray);
-// });
-
-
-
-
-
-
-
-
+//==========================================================
 
 // SIDES
 
@@ -252,12 +366,9 @@ sidesButton.on('click', function() {
 	});
 });
 
-// ADDING SIDES TO RECEIPT
-
 $('.sides > li').on('click', function() { 
 	var receiptLI = $('<li></li>');
 	$(this).clone().appendTo($('#receiptUL'));
-
 	calculate();
 }); 
 
@@ -287,11 +398,8 @@ entreesButton.on('click', function() {
 	});
 });
 
-// ADDING ENTREES TO RECEIPT
-
 $('.entrees > li').on('click', function() { 
 	$(this).clone().appendTo($('#receiptUL'));
-
 	calculate();
 }); 
 
@@ -320,11 +428,8 @@ dessertButton.on('click', function() {
 	});
 });
 
-// ADDING DESSERTS TO RECEIPT
-
 $('.dessert > li').on('click', function() { 
 	$(this).clone().appendTo($('#receiptUL'));
-	
 	calculate();
 }); 
 
@@ -354,14 +459,12 @@ drinksButton.on('click', function() {
 	});
 });
 
-// ADDING DRINKS TO RECEIPT
-
 $('.drinks > li').on('click', function() { 
-	$(this).clone().appendTo($('#receiptUL'));
-	
+	$(this).clone().appendTo($('#receiptUL'));	
 	calculate();
 }); 
 
 
 
 });
+
