@@ -294,6 +294,8 @@ $(function() {
 	// push new object (contains name, items, + price) 
 	// into the  ordersArray
 		ordersArray.push(newObject);
+		console.log(newObject);
+		console.log(ordersArray);
 
 	// When a new order gets saved, fire the clear receipt function
 		clearReceipt();
@@ -306,14 +308,7 @@ $(function() {
 
 
 
-	// CALLING THE TRACKED ORDER
-
-
-	$('.multipleOrders ul li#0').on('click', function() {
-		alert("Order #0");
-		console.log($('.multipleOrders ul li#0').text());
-	});
-
+	// CALLING THE TRACKED ORDER (NOT FINISHED)
 
 	// $('.multipleOrders > ul > li > button').on('click', function() {
 	// 	alert("hello");
@@ -325,6 +320,13 @@ $(function() {
 	// 	// 	};
 	// 	// };
 	// });
+
+	
+	// $('.multipleOrders ul li#0').on('click', function() {
+	// 	alert("Order #0");
+	// 	console.log($('.multipleOrders ul li#0').text());
+	// });
+
 
 
 // ==========================================================
