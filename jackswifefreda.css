@@ -109,13 +109,14 @@ h3 {
 	margin: 5px;
 }
 
-.multipleOrders li button {x;
+.multipleOrders li button {
 	border: 1px solid black;
 	border-radius: 10px;
 	background: white;
 	margin: 0 2px;
 	text-transform: uppercase;
 	font-size: 12px;
+	font-weight: bold;
 }
 
 

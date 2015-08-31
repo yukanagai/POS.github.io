@@ -310,6 +310,8 @@ $(function() {
 
 	// CALLING THE TRACKED ORDER (NOT FINISHED)
 
+
+
 	// $('.multipleOrders > ul > li > button').on('click', function() {
 	// 	alert("hello");
 	// 	// for (var i=0; i<ordersArray.length; i++) {
@@ -320,6 +322,18 @@ $(function() {
 	// 	// 	};
 	// 	// };
 	// });
+
+
+	$('.multipleOrders > ul > li > button').on('click', function() {
+		for (var i=0; i<ordersArray.length; i++) {
+			for (var name in ordersArray[i]) {
+				if (ordersArray[i].name === $(this).text()) {
+					
+				};
+			};
+		};
+	});
+
 
 	
 	// $('.multipleOrders ul li#0').on('click', function() {
