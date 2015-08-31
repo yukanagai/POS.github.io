@@ -1,7 +1,7 @@
 html {
 	padding: 0px;
-	margin: 30px;
-	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	margin: 40px;
+	font-family: 'Lato', sans-serif;
 	background: url("http://media.vogue.com/r/c_1,h_396,w_660/2015/02/02/HCH_3000.jpg");
 	background-size: cover;
 }
@@ -32,8 +32,46 @@ html {
 	height: 130px;
 }
 
-h1, h3 {
+h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 20px;
 	text-align: center;
+	background: #00A896;
+	display: block;
+	margin: 50px;
+	color: white;
+}
+
+h3 {
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+	display: block;
+	background: #05668D;
+	margin: 20px 50px;
+	color: white;
+}
+
+.rightColumn img {
+	width: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.menuCategories {
+	text-align: center;
+}
+
+.menuCategories ul{
+	margin-right: -10px;
+	max-width: 550px;
+}
+
+.menuCategories li {
+	margin: 3px;
+	margin: 0 auto;
+	width: 100%;
+	list-style: none;
 }
 
 .menuCategories button {
@@ -41,7 +79,9 @@ h1, h3 {
 	border: 1px solid black;
 	border-radius: 10px;
 	background: white;
-	margin: 0 10px;
+	margin: 4px;
+	font-size: 13px;
+	text-transform: uppercase;
 }
 
 .menuCategories button:hover {
@@ -49,49 +89,20 @@ h1, h3 {
 	color: white;
 }
 
-.menuCategories ul {
-	list-style: none;
-	margin: 0 auto;
-	margin-top: 30px;
-	margin: 10px;
-	width: 100%;
-}
-
-.menuCategories li {
-	margin: 3px;
-}
-
-.receipt li {
-	margin: 3px;
-}
-
-.menuItemsHide {
+.menuItemsHide{
 	display: none;
 	text-align: left;
+	width: 60%;
+	margin: 0 auto;
+}
+
+.menuItemsHide li {
+	margin: 3px;
 }
 
 .receipt li {
 	list-style-type: none;
-}
-
-form {
-	margin: 0 auto;
-	text-align: center;
-	font-size: 12px;
-}
-
-#totalBeforeTax, #salesTax, #finalTotal {
-	text-align: center;
-}
-
-p #orderTotalText {
-	color: blue;
-	font-size: 15px;
-}
-
-#newOrder {
-	display: block;
-	margin: 0 auto;
+	margin: 3px;
 }
 
 .multipleOrders ul {
@@ -100,23 +111,48 @@ p #orderTotalText {
 
 .multipleOrders li {
 	display: inline-block;
-	margin: 0 10px;
-
+	margin: 5px;
 }
 
-.multipleOrders li button {
-	padding: 5px 10px;
+.multipleOrders li button {x;
 	border: 1px solid black;
 	border-radius: 10px;
 	background: white;
 	margin: 0 2px;
 }
 
+
 #calculations {
 	margin: 0 auto;
-	text-align: center;
+	width: 70%;
+	text-align: left;
 	display: block;
-	position: relative;
-	bottom: 0px;
+	font-family: 'Lato', sans-serif;
+	font-size: 13px;
 }
 
+input, textarea {
+	width: 50%;
+	border: 1px solid black;
+	font-size: 14px;
+}
+
+
+#saveOrder {
+	background-color: #C7104B;
+	color: white;
+	border-radius: 20px;
+	border: 1px solid white;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 14px;
+}
+
+#clearButton {
+	background-color: #7f8c8d;
+	color: white;
+	border-radius: 20px;
+	border: 1px solid white;
+	text-align: center;
+	margin: 0 auto;
+}
