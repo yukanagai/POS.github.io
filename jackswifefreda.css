@@ -89,19 +89,13 @@ h3 {
 	color: white;
 }
 
-.menuItemsHide{
+.menuItemsHide {
 	display: none;
 	text-align: left;
-	width: 60%;
 	margin: 0 auto;
 }
 
 .menuItemsHide li {
-	margin: 3px;
-}
-
-.receipt li {
-	list-style-type: none;
 	margin: 3px;
 }
 
@@ -119,6 +113,12 @@ h3 {
 	border-radius: 10px;
 	background: white;
 	margin: 0 2px;
+}
+
+
+.receipt li {
+	list-style-type: none;
+	margin: 3px;
 }
 
 
