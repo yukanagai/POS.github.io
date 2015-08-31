@@ -243,12 +243,15 @@ $(function() {
 
 	/// TRACKING MULTIPLE ORDERS
 
+	// Create an empty orders array that will hold all individual customer orders
+	// Customer orders will be stored as an object with the data: name, items [], + price[]
+
 	var saveOrder = $('#saveOrder');	
 	var multipleOrders = $('.multipleOrders'); 	
 	var orderListUL = $('<ul></ul>');
 	var ordersArray = [];			
 
-	// Store each order into customer name buttons as an object:
+	// When user clicks "save order"... store  order into customer name buttons as an object:
 
 	saveOrder.on('click', function() { 
 		event.preventDefault();
@@ -308,9 +311,10 @@ $(function() {
 
 
 
-	// CALLING THE TRACKED ORDER (NOT FINISHED)
+	// CALLING THE TRACKED ORDER (NOT WORKING)
 
-
+	// Can't figure out how to connect my customer order buttons with my 
+	// unique orders stored in objects within an array ....
 
 	// $('.multipleOrders > ul > li > button').on('click', function() {
 	// 	alert("hello");
